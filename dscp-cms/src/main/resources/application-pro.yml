@@ -1,0 +1,19 @@
+nacos:
+  config:
+    namespace: ptg-isv
+    server-addr: nacos-service.cross:80
+    bootstrap:
+      enable: true
+    data-id: isv-provider
+    group: DEV
+    type: yaml
+    max-retry: 10
+    auto-refresh: true
+    config-retry-time: 2333
+    config-long-poll-timeout: 46000
+
+# 注意：开发环境中请使用独立的命名空间，防止调用错误
+dubbo:
+  registry:
+    parameters:
+      namespace: ptg-isv

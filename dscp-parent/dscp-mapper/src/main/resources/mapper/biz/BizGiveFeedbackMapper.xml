@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.topideal.dscp.mapper.biz.BizGiveFeedbackMapper">
+
+    <!-- 分页条件查询 -->
+    <select id='findPage' resultType='BizGiveFeedbackRespDto' parameterType="BizGiveFeedbackReqDto">
+        select a.* from biz_give_feedback a where a.deleted = 0
+        <if test='query.status!=null and !"".equals(query.status)'>and a.status = #{query.status}</if>
+        <if test='query.type!=null and !"".equals(query.type)'>and a.type = #{query.type}</if>
+        <if test="query.enterpriseId != null and query.enterpriseId != ''">and enterprise_id = #{query.enterpriseId}</if>
+        order by a.create_time desc
+    </select>
+
+    <select id="selectByStatus" resultType="java.util.Map">
+        SELECT	COUNT(*) as `sum`,
+                  COUNT(CASE WHEN status=0 THEN 1 END) AS `0`,
+                  COUNT(CASE WHEN status=1 THEN 1 END) AS `1`,
+                  COUNT(CASE WHEN status=2 THEN 1 END) AS `2`
+        FROM biz_give_feedback
+        where deleted = 0 and enterprise_id = #{enterpriseId}
+    </select>
+
+
+    <select id="selectImportExport" resultType="java.lang.String">
+        select id from biz_import_export_order where deleted = 0 and enterprise_id = #{enterpriseId}
+    </select>
+
+    <select id="selectEntry" resultType="java.lang.String">
+        select id from biz_bonded_entry_order where deleted = 0 and enterprise_id = #{enterpriseId}
+    </select>
+    <select id="selectExit" resultType="java.lang.String">
+        select id from biz_bonded_exit_order where deleted = 0 and enterprise_id = #{enterpriseId}
+    </select>
+
+    <select id="selectAllot" resultType="java.lang.String">
+        select id from biz_allot_order where deleted = 0 and merchant_no = #{enterpriseId}
+    </select>
+
+</mapper>

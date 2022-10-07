@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.topideal.dscp.mapper.base.BaseMerchantMapper">
+
+    <select id="findPage" resultType="BaseMerchantRespDto" parameterType="BaseMerchant">
+        SELECT `id`,`code`,`name`,`id_type`,`id_card`,`registered_date`,`status`,`white_no`,`merchant_type` FROM
+        `base_merchant`
+        <where>
+            `deleted` = 0
+            <if test="query.code!=null and query.code!=''">and `code` like concat('%',#{query.code},'%')</if>
+            <if test="query.name!=null and query.name!=''">and `name` like concat('%',#{query.name},'%')</if>
+            <if test="query.idType !=null and query.idType!='' ">and `id_type` = #{query.idType}</if>
+            <if test="query.registeredDate !=null">and DATE_FORMAT(`registered_date`, '%Y-%m-%d')  = #{query.registeredDate}</if>
+            <if test="query.status != null">and `status` = #{query.status}</if>
+            <if test="query.merchantType != null ">and `merchant_type` =#{query.merchantType}</if>
+            <if test="query.whiteNo != null ">and `white_no` =#{query.whiteNo}</if>
+        </where>
+        order by create_time desc
+    </select>
+    <select id="selectsByManage" resultType="com.topideal.dscp.dto.common.SelectBeanDto">
+        SELECT `id` as `value` ,`name` as label FROM `base_merchant` where `deleted` = 0
+    </select>
+</mapper>

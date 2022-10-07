@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.topideal.dscp.mapper.sys.SysConfigMenuMapper">
+
+    <resultMap id="SysConfigMenuListDtoMap" type="SysConfigMenuRespDto">
+        <result column="id" property="id"/>
+        <result column="label" property="label"/>
+        <result column="type" property="type"/>
+        <result column="route" property="route"/>
+        <result column="permission" property="permission"/>
+        <result column="parentId" property="parent_id"/>
+        <result column="sortOrder" property="sort_order"/>
+        <result column="deleted" property="deleted" jdbcType="BIT"/>
+        <result column="userId" property="userId"/>
+        <collection property="children" javaType="java.util.ArrayList"
+                    select="getChildren" ofType="SysConfigMenuRespDto"
+                    column="{parentId = id, userId = userId}">
+        </collection>
+
+    </resultMap>
+
+    <!-- 通过用户id查询其拥有的菜单权限 -->
+    <select id='findConfigMenuByUserId' resultMap="SysConfigMenuListDtoMap">
+        select distinct  m.*, ur.user_id userId from sys_config_menu m
+        join ref_role_menu rm on rm.menu_id = m.id and rm.deleted = 0
+        join ref_user_role ur on ur.role_id = rm.role_id and ur.deleted = 0
+        where m.deleted = 0 and m.parent_id = '' and ur.user_id = #{userId}
+    </select>
+
+    <!-- 与上面sql匹配使用 嵌套查询 用户拥有的菜单权限 -->
+    <select id='getChildren' resultMap="SysConfigMenuListDtoMap">
+        select distinct m.*, ur.user_id userId from sys_config_menu m
+        join ref_role_menu rm on rm.menu_id = m.id and rm.deleted = 0
+        join ref_user_role ur on ur.role_id = rm.role_id and ur.deleted = 0
+        where m.deleted = 0 and m.parent_id = #{parentId}
+        <if test="userId != null">
+            and ur.user_id = #{userId}
+        </if>
+    </select>
+
+
+    <!-- 根据角色id查询权限 -->
+    <select id='findByRoleId' resultType='SysConfigMenuRespDto'>
+        select m.*, if(rm.id is null, false, true) checked from sys_config_menu m
+        left join ref_role_menu rm on rm.menu_id = m.id and rm.deleted = 0 and rm.role_id = #{roleId}
+        where m.deleted = 0
+        order by m.sort_order asc
+    </select>
+
+    <!-- 查询权限为菜单和没有URL路径的 -->
+    <select id="findAll" resultType="SysConfigMenuRespDto" parameterType="SysConfigMenuReqDto">
+        select * from sys_config_menu where deleted = 0
+        <if test='query.type !=null and !"".equals(query.type)'>
+            and type = #{query.type}
+            and route = ''
+        </if>
+        order by sort_order asc, create_time desc
+    </select>
+
+
+</mapper>

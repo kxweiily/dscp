@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.topideal.dscp.mapper.base.BaseMessageCenterMapper">
+    <update id="pcUpdate">
+        update base_message_center
+        set read_status = 0
+        where id in
+        <foreach collection="list" separator="," item="id" open="(" close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <update id="pcDelete">
+        update base_message_center
+        set deleted = 1
+        where id in
+        <foreach collection="list" separator="," item="id" open="(" close=")">
+        #{id}
+        </foreach>
+    </update>
+
+    <select id="selectSum" resultType="com.topideal.dscp.dto.response.base.PcBaseMessageCenterRespDtoSum">
+        SELECT	COUNT(*) as `sum`,
+                  COUNT(CASE WHEN TYPE=0 THEN 1 END) AS systemSum,
+                  COUNT(CASE WHEN TYPE=1 THEN 1 END) AS activitySum,
+                  COUNT(CASE WHEN TYPE=2 THEN 1 END) AS afficheSum
+        FROM base_message_center
+        where deleted = 0 and read_status = 1 and merchant_id = #{merchantId} or user_id = #{userId}
+    </select>
+
+    <select id="pcLoadPage" resultType="com.topideal.dscp.dto.response.base.PcBaseMessageCenterRespDto">
+        select id,title,details,read_status,send_time
+        from base_message_center
+        where
+        deleted = 0 and read_status = 1 and merchant_id = #{id} or user_id = #{userId}
+        <if test="type != null">and type = #{type}</if>
+        order by send_time desc
+    </select>
+</mapper>

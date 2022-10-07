@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="dscp-mapper" />
+        <module name="dscp-entity" />
+        <module name="dscp-service" />
+        <module name="dscp-interface" />
+        <module name="dscp-common" />
+        <module name="dscp-extApi" />
+        <module name="dscp-cms" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="dscp-app" target="11" />
+      <module name="dscp-cms" target="11" />
+      <module name="dscp-common" target="11" />
+      <module name="dscp-entity" target="11" />
+      <module name="dscp-extApi" target="11" />
+      <module name="dscp-interface" target="11" />
+      <module name="dscp-mapper" target="11" />
+      <module name="dscp-parent" target="11" />
+      <module name="dscp-service" target="11" />
+      <module name="ti-api" target="11" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

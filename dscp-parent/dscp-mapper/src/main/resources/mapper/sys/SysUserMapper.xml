@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.topideal.dscp.mapper.sys.SysUserMapper">
+
+    <!-- 分页条件查询 -->
+    <select id='findPage' resultType='SysUserRespDto' parameterType="SysUserReqDto">
+        select u.* from sys_user u  where u.deleted = 0
+     <!--   <if test='query.roleId!=null and !"".equals(query.roleId)' >
+            left join ref_user_role ur on ur.user_id = u.id and ur.deleted = 0
+        </if>
+        <if test='query.kaAreaId!=null and !"".equals(query.kaAreaId)' >
+            left join ref_user_area ua on ua.user_id = u.id and ua.deleted = 0
+        </if>
+        <if test='query.name!=null and !"".equals(query.name)' > and u.name like '%${query.name}%' </if>
+        <if test='query.tel!=null and !"".equals(query.tel)' > and u.tel like '%${query.tel}%' </if>
+        <if test='query.email!=null and !"".equals(query.email)' > and u.email like '%${query.email}%' </if>
+        <if test='query.roleId!=null and !"".equals(query.roleId)' > and ur.role_id=#{query.roleId} </if>
+        <if test='query.kaAreaId!=null and !"".equals(query.kaAreaId)' > and ua.area_id=#{query.kaAreaId} </if>-->
+        <if test='query.nickname!=null and !"".equals(query.nickname)'>and u.nickname like '%${query.nickname}%'</if>
+        <if test='query.jobNumber!=null and !"".equals(query.jobNumber)'>and u.job_number = #{query.jobNumber}</if>
+        <if test='query.isEnabled!=null and !"".equals(query.isEnabled)' > and u.is_enabled=#{query.isEnabled} </if>
+        order by u.create_time desc
+    </select>
+
+    <!-- 通过角色id查询用户 -->
+    <select id='findByRoleId' resultType='SysUserRespDto'>
+        select u.id, u.`name`, u.nickname from sys_user u
+        join ref_user_role ur on ur.user_id = u.id and ur.deleted = 0
+        where u.deleted = 0 and u.is_enabled = 1 and ur.role_id = #{roleId} order by u.create_time asc
+    </select>
+
+    <!-- 通过角色id查询用户(全部用户) -->
+    <select id="refAllUser" resultType="SysUserRespDto">
+        select u.*, if(ur.id is null, false, true) isAuthorization from sys_user u
+        left join ref_user_role ur on ur.user_id = u.id and ur.deleted = 0 and ur.role_id = #{roleId}
+        where u.deleted = 0
+        order by u.create_time asc
+    </select>
+
+
+</mapper>

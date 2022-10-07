@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.topideal.dscp.mapper.base.BaseContractMapper">
+
+    <!-- 根据id查询重推签约合同相关信息 -->
+    <select id='findForReSigningById' resultType='BaseContractRespDto'>
+        select c.*, a.url agreementUrl, a.`name` agreementName, a.seal_key_word, s.`name` contractorName, s.tel contractorTel, s.identity_card contractorIDCard from base_contract c
+        join base_agreement a on c.agreement_id = a.id and a.deleted = 0 and a.`status` != 'disable'
+        join base_store_manager s on c.contractor_id = s.id and s.deleted = 0 and s.`status` != 'disable'
+        where c.deleted = 0 and c.sign_status = 'failure' and c.id = #{id}
+    </select>
+
+    <!-- 分页条件查询 -->
+    <select id='findPage' resultType='BaseContractRespDto' parameterType="BaseContractReqDto">
+        select c.*, a.`name` agreementName from base_contract c
+        join base_agreement a on c.agreement_id = a.id and a.deleted = 0
+        where c.deleted = 0
+        <if test='query.kaId!=null and !"".equals(query.kaId)'>and c.ka_id = #{query.kaId}</if>
+        <if test='query.agreement!=null and !"".equals(query.agreement)'> and (a.id like '%${query.agreement}%' or a.name like '%${query.agreement}%') </if>
+        <if test='query.contractorId!=null and !"".equals(query.contractorId)' > and c.contractor_id like '%${query.contractorId}%' </if>
+        <if test='query.signType!=null and !"".equals(query.signType)' > and c.sign_type = #{query.signType} </if>
+        <if test='query.signStatus!=null and !"".equals(query.signStatus)' > and c.sign_status = #{query.signStatus} </if>
+        <if test='query.tel!=null and !"".equals(query.tel)' > and c.tel like '%${query.tel}%' </if>
+        <if test='query.signTimeStart!=null and !"".equals(query.signTimeStart)' >and  DATE_FORMAT(c.sign_time, '%Y-%m-%d')&lt;= DATE_FORMAT(#{query.signTimeStart}, '%Y-%m-%d') </if>
+        <if test='query.signTimeEnd!=null and !"".equals(query.signTimeEnd)' > and  DATE_FORMAT(c.sign_time, '%Y-%m-%d')&lt;= DATE_FORMAT(#{query.signTimeEnd}, '%Y-%m-%d') </if>
+        order by c.create_time desc
+    </select>
+
+    <!-- 根据签约人id 查询多条 签约合同 -->
+    <select id='selectByContractorId' resultType='com.topideal.dscp.entity.base.BaseContract'>
+        select * from base_contract
+        where deleted = 0 and contractor_id=#{contractorId}
+    </select>
+
+
+
+</mapper>

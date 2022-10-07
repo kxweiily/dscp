@@ -1,0 +1,17 @@
+nacos:
+  config:
+    namespace: a68ea2fa-489d-4831-ba2e-8a58c8488553
+    server-addr: nacos.topideal.local:80
+    bootstrap:
+      enable: true
+    data-id: dscp
+    group: dev
+    type: yaml
+    max-retry: 10
+    auto-refresh: true
+    config-retry-time: 2333
+    config-long-poll-timeout: 46000
+    ext-config:
+      - data-id: dscp-interface
+        group: dev
+        type: properties

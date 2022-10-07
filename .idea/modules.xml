@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/dscp-cms/dscp-cms.iml" filepath="$PROJECT_DIR$/dscp-cms/dscp-cms.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dscp-parent/dscp-common/dscp-common.iml" filepath="$PROJECT_DIR$/dscp-parent/dscp-common/dscp-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dscp-parent/dscp-entity/dscp-entity.iml" filepath="$PROJECT_DIR$/dscp-parent/dscp-entity/dscp-entity.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dscp-extApi/dscp-extApi.iml" filepath="$PROJECT_DIR$/dscp-extApi/dscp-extApi.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dscp-parent/dscp-interface/dscp-interface.iml" filepath="$PROJECT_DIR$/dscp-parent/dscp-interface/dscp-interface.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dscp-parent/dscp-mapper/dscp-mapper.iml" filepath="$PROJECT_DIR$/dscp-parent/dscp-mapper/dscp-mapper.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dscp-parent/dscp-parent.iml" filepath="$PROJECT_DIR$/dscp-parent/dscp-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dscp-parent/dscp-service/dscp-service.iml" filepath="$PROJECT_DIR$/dscp-parent/dscp-service/dscp-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/ti-dscp.iml" filepath="$PROJECT_DIR$/.idea/ti-dscp.iml" />
+    </modules>
+  </component>
+</project>

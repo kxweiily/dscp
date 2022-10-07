@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.topideal</groupId>
+		<artifactId>dscp-parent</artifactId>
+        <version>1.0-SNAPSHOT-prod</version>
+	</parent>
+
+	<artifactId>dscp-mapper</artifactId>
+	<name>dscp-mapper</name>
+	<version>1.0-SNAPSHOT-prod</version>
+	
+	<url>http://maven.apache.org</url>
+
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<dscp.version>1.0-SNAPSHOT-prod</dscp.version>
+	</properties>
+
+
+	<dependencies>
+
+		<!-- 公共工程 -->
+		<dependency>
+			<groupId>com.topideal</groupId>
+			<artifactId>dscp-common</artifactId>
+			<version>${dscp.version}</version>
+		</dependency>
+
+		<!-- 公共实体类 -->
+		<dependency>
+			<groupId>com.topideal</groupId>
+			<artifactId>dscp-entity</artifactId>
+			<version>${dscp.version}</version>
+		</dependency>
+
+		<!-- spring-boot mybatis 相关 -->
+		<dependency>
+			<groupId>org.mybatis.spring.boot</groupId>
+			<artifactId>mybatis-spring-boot-starter</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.baomidou</groupId>
+			<artifactId>mybatis-plus-boot-starter</artifactId>
+		</dependency>
+	</dependencies>
+</project>

@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.topideal</groupId>
+		<artifactId>dscp-parent</artifactId>
+        <version>1.0-SNAPSHOT-prod</version>
+	</parent>
+
+	<artifactId>dscp-entity</artifactId>
+	<name>dscp-entity</name>
+	 <version>1.0-SNAPSHOT-prod</version>
+	 
+	<url>http://maven.apache.org</url>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<dscp.version>1.0-SNAPSHOT-prod</dscp.version>
+	</properties>
+
+	<dependencies>
+		<!-- 公共工程 -->
+		<dependency>
+			<groupId>com.topideal</groupId>
+			<artifactId>dscp-common</artifactId>
+			<version>${dscp.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.baomidou</groupId>
+			<artifactId>mybatis-plus-boot-starter</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.persistence</groupId>
+			<artifactId>persistence-api</artifactId>
+			<version>1.0</version>
+		</dependency>
+
+		<!-- springfox-swagger3 -->
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-boot-starter</artifactId>
+		</dependency>
+		<!-- springfox-swagger3 end -->
+
+
+	</dependencies>
+</project>

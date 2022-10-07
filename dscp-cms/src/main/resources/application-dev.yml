@@ -1,0 +1,132 @@
+#nacos:
+#  config:
+#    namespace: a68ea2fa-489d-4831-ba2e-8a58c8488553
+#    server-addr: nacos.topideal.local:80
+#    bootstrap:
+#      enable: true
+#    data-id: dscp
+#    group: dev
+#    type: yaml
+#    max-retry: 10
+#    auto-refresh: true
+#    config-retry-time: 2333
+#    config-long-poll-timeout: 46000
+#    ext-config:
+#      - data-id: dscp-interface
+#        group: dev
+#        type: properties
+
+# 是否需求鉴权(dev test 环境用于接口测试,已在nacos配置,本地启动可以开启这个覆盖naocos上面的配置)
+authentication.authority: false
+
+# 注意：开发环境中请使用独立的命名空间，防止调用错误
+#dubbo:
+#  registry:
+#    parameters:
+#      namespace: dscp-topideal-local
+
+spring:
+  application:
+    name: dscp
+  jackson:
+    time-zone: GMT+8
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+      enabled: true
+  # 高版本springboot 兼容 swagger
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  # 数据库
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    druid:
+      url: jdbc:mysql://10.10.100.200:3306/dscp?useSSL=false&allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8
+      username: root
+      password: root
+      initial-size: 10
+      max-active: 100
+      min-idle: 10
+      max-wait: 60000
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 20
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      validation-query: select 1
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      stat-view-servlet:
+        enabled: true
+        url-pattern: /druid/*
+        login-username: admin
+        login-password: admin
+      filter:
+        stat:
+          log-slow-sql: true
+          slow-sql-millis: 1000
+          merge-sql: true
+        wall:
+          config:
+            multi-statement-allow: true
+  # liquibase
+  liquibase:
+    enabled: false
+    change-log: classpath:db/changelog-master.xml
+  # redis
+  redis:
+    host: 10.10.102.183
+    port: 6379
+    password:
+    database: 4
+    lettuce:
+      pool:
+        max-idle: 8
+        max-active: 8
+        min-idle: 1
+#  # rabbitmq
+#  rabbitmq:
+#    host: 10.10.102.207
+#    port: 5672
+#    username: guest
+#    password: guest
+#    connection-timeout: 60s
+#    virtualHost: /dscp-dev
+#  # meilisearch
+#  meilisearch:
+#    host-url: http://10.10.100.15:31456
+#    api-key:
+#  # mongodb
+#  data:
+#    mongodb:
+#      uri: mongodb://root:root@10.10.102.207:27017/admin?authMechanism=SCRAM-SHA-1&maxIdleTimeMS=60000
+#      database: dscp
+
+
+# mybaits-plus配置
+mybatis-plus:
+  # MyBatis Mapper所对应的XML文件位置
+  mapper-locations: classpath*:/mapper/**/*Mapper.xml
+  #实体扫描，多个package用逗号或者分号分隔
+  typeAliasesPackage: com.topideal.dscp.entity,com.topideal.dscp.dto
+  global-config:
+    # 关闭MP3.0自带的banner
+    banner: false
+    db-config:
+      #主键类型  AUTO:"数据库ID自增", NONE:"该类型为未设置主键类型(约等于 INPUT)" INPUT:"用户输入ID", ASSIGN_ID:"分配ID (主键类型为number或string）", ASSIGN_UUID:"雪花+uuid 分配UUID (主键类型为 string)";
+      id-type: ASSIGN_ID
+      # 逻辑删除表示 1
+      logic-delete-value: 1
+      # 逻辑未删除 0
+      logic-not-delete-value: 0
+    #原生配置
+  configuration:
+    # mybatis的字段下划线转实体类的驼峰命名
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    call-setters-on-nulls: true
+    jdbc-type-for-null: 'null'
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

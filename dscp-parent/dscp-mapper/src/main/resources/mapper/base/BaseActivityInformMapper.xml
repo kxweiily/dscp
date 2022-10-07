@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.topideal.dscp.mapper.base.BaseActivityInformMapper">
+
+    <update id="pcUpdate">
+            update base_activity_inform
+            set read_status = 0
+            where id in
+            <foreach collection="list" separator="," item="id" open="(" close=")">
+                #{id}
+            </foreach>
+
+    </update>
+
+    <update id="pcDelete">
+        update base_activity_inform
+        set deleted = 1
+        where id in
+        <foreach collection="list" separator="," item="id" open="(" close=")">
+            #{id}
+        </foreach>
+    </update>
+
+
+    <select id="findPage" resultType="BaseActivityInformRespDto">
+        select `id`,`title`,`type`,`status`,`details`,`recipient`,`creator`,`create_time`,`verifier`,`verify_time`
+        from base_activity_inform
+        <where>
+            `deleted` = 0
+            <if test="query.title != null and query.title != ''">and `title` like concat('%',#{query.title},'%') </if>
+            <if test="query.type != null and query.type != ''">and `type` in
+            <foreach collection="list" item="item" separator="," open="(" close=")">
+                                    #{item}
+            </foreach> </if>
+            <if test="query.status != null">and `status` = #{query.status}</if>
+            <if test="query.recipient != null and query.recipient != ''">and `recipient` = #{query.recipient}</if>
+        </where>
+        order by create_time desc
+    </select>
+
+    <select id="findSysPage" resultType="com.topideal.dscp.dto.response.base.BaseActivityInformRespDto">
+        select `id`,`title`,`type`,`details`,`recipient`,`read_status`,`create_time`
+        from base_activity_inform
+        <where>
+            `deleted` = 0 and type = 0
+            <if test="query.title != null and query.title != ''">and `title` like concat('%',#{query.title},'%')</if>
+            <if test="query.recipient != null and query.recipient != '' ">and `recipient` = #{query.recipient}</if>
+            <if test="query.status != null ">and `status` = #{query.status}</if>
+        </where>
+        order by create_time desc
+    </select>
+
+    <select id="pcLoadPage" resultType="com.topideal.dscp.dto.response.base.PcBaseMessageCenterRespDto">
+        select id,title,details,read_status,send_time
+        from `base_activity_inform`
+        where
+        deleted = 0 and read_status = 1
+            <if test="type != null">and type = #{type}</if>
+        order by send_time desc
+    </select>
+
+    <select id="selectSum" resultType="com.topideal.dscp.dto.response.base.PcBaseMessageCenterRespDtoSum">
+        SELECT	COUNT(*) as `sum`,
+                  COUNT(CASE WHEN TYPE=0 THEN 1 END) AS systemSum,
+                  COUNT(CASE WHEN TYPE=1 THEN 1 END) AS activitySum,
+                  COUNT(CASE WHEN TYPE=2 THEN 1 END) AS afficheSum
+        FROM `base_activity_inform`
+        where deleted = 0 and read_status = 1
+    </select>
+</mapper>

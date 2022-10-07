@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.topideal.dscp.mapper.base.BaseAgreementMapper">
+
+    <!-- 分页条件查询 -->
+    <select id='findPage' resultType='BaseAgreementRespDto' parameterType="baseAgreementReqDto">
+
+        SELECT
+        a.user_id,t.sign,t.id as template_id,t.`name`,t.`type`,a.sign_time
+        FROM
+        base_agreement AS a
+        LEFT JOIN
+        base_agreement_template AS t ON a.template_id = t.id
+        <where>
+            a.deleted=0
+            <if test="query.userId!=null and query.userId!=''">and a.user_id like concat('%',#{query.userIdwo},'%')</if>
+            <if test="query.sign !=null ">and t.sign=#{query.sign}</if>
+            <if test="query.startTime!=null">and a.sign_time &gt;= #{query.startTime}</if>
+            <if test="query.endTIme !=null ">and a.sign_time &lt;= #{query.endTime}</if>
+            <if test="query.name != null and query.name!=''">and t.`name` like concat('%',#{query.name},'%')</if>
+            <if test="query.type!=null">and t.`type`=#{query.type}</if>
+        </where>
+        order by a.sign_time desc
+    </select>
+
+
+</mapper>

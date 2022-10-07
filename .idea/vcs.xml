@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/dscp-app" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/dscp-cms" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/dscp-extApi" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/dscp-parent" vcs="Git" />
+  </component>
+</project>

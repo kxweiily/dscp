@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.topideal.dscp.mapper.base.BaseUserMapper">
+
+
+    <!-- 分页条件查询 -->
+    <select id='findPage' resultType='BaseUserRespDto' parameterType="BaseUserReqDto">
+        select u.* ,m.`name` as merchantName
+        from base_user u left join base_merchant as m on u.enterprise_id=m.id and m.deleted=0
+        where u.deleted = 0
+        <if test='query.id!=null and !"".equals(query.id)' > and u.id = #{query.id} </if>
+        <if test='query.tel!=null and !"".equals(query.tel)' > and u.tel = #{query.tel} </if>
+        <if test='query.email!=null and !"".equals(query.email)' > and u.email = #{query.email} </if>
+        <if test='query.userType!=null and !"".equals(query.userType)' > and u.user_type=#{query.userType} </if>
+        <if test='query.isCancelled!=null and !"".equals(query.isCancelled)' > and u.is_cancelled=#{query.isCancelled} </if>
+        <if test='query.enterpriseId!=null and !"".equals(query.enterpriseId)' > and u.enterprise_id=#{query.enterpriseId} </if>
+        <if test='query.createTime != null'> and DATE_FORMAT(u.create_time, '%Y-%m-%d') = #{query.createTime} </if>
+        order by u.create_time desc
+    </select>
+
+
+    <select id="loadPageStaff" resultType="com.topideal.dscp.dto.response.base.BaseUserRespDto"  parameterType="BaseUserReqDto">
+        select id, name, tel, email, binding_time from base_user
+        where deleted = 0 and  enterprise_id = #{query.enterpriseId}
+        and user_Type = 'employee'
+        <if test='query.tel!=null and !"".equals(query.tel)' > and tel  = #{query.tel} </if>
+        <if test='query.id!=null and !"".equals(query.id)' > and id = #{query.id} </if>
+        <if test='query.email!=null and !"".equals(query.email)' > and email = #{query.email}</if>
+        <if test='query.bindingTimeStart!=null and !"".equals(query.bindingTimeStart)
+                and query.bindingTimeEnd!=null and !"".equals(query.bindingTimeEnd)'  >
+            and binding_time BETWEEN  #{query.bindingTimeStart} and #{query.bindingTimeEnd}
+        </if>
+        order by binding_time desc
+    </select>
+</mapper>

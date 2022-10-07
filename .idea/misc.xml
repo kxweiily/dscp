@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JavaScriptSettings">
+    <option name="languageLevel" value="ES6" />
+  </component>
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/ti-parent/pom.xml" />
+        <option value="$PROJECT_DIR$/ti-provider/pom.xml" />
+        <option value="$PROJECT_DIR$/ti-cms/pom.xml" />
+        <option value="$PROJECT_DIR$/ti-app/pom.xml" />
+        <option value="$PROJECT_DIR$/ti-api/pom.xml" />
+        <option value="$PROJECT_DIR$/ti-ext/pom.xml" />
+        <option value="$PROJECT_DIR$/dscp-cms/pom.xml" />
+        <option value="$PROJECT_DIR$/dscp-app/pom.xml" />
+        <option value="$PROJECT_DIR$/dscp-ext/pom.xml" />
+        <option value="$PROJECT_DIR$/dscp-parent/pom.xml" />
+        <option value="$PROJECT_DIR$/dscp-extApi/pom.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="false" project-jdk-name="openjdk11" project-jdk-type="JavaSDK" />
+</project>
